@@ -12,12 +12,13 @@ services:
     container_name: postgresContainer
 
   db2:
-    image: mysql:5
+    image: mysql:8
     ports:
-      - "6432:6432"
+      - "3307:3307"
     environment:
       MYSQL_USER: mysql
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_PASSWORD: mysql
       MYSQL_DATABASE: blog
     container_name: mysqlContainer
+
