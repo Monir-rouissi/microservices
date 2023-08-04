@@ -25,5 +25,19 @@ public class Inventory {
         this.skuCode = skuCode;
     }
 
+    public Integer getQuantity() {
+        return Quantity;
+    }
 
+    public void setQuantity(Integer quantity) {
+        Quantity = quantity;
+    }
+
+    public String getSkuCode() {
+        return skuCode;
+    }
+
+    public void setSkuCode(String skuCode) {
+        this.skuCode = skuCode;
+    }
 }
