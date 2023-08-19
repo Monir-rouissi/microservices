@@ -17,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="api-gateway" target="17" />
       <module name="order-service" target="17" />
       <module name="product.service" target="17" />
       <module name="product.service.main" target="17" />
