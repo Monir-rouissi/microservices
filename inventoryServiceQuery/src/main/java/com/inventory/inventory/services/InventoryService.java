@@ -5,7 +5,6 @@ import com.inventory.inventory.model.InventoryRequest;
 import com.inventory.inventory.model.InventoryResponse;
 import com.inventory.inventory.repos.InventoryRepo;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +15,11 @@ import java.util.List;
 public class InventoryService {
     private InventoryRepo repo;
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final String topic = "create-inventory";
-
-    public InventoryService(InventoryRepo repo, KafkaTemplate<String, Object> kafkaTemplate) {
+    public InventoryService(InventoryRepo repo) {
         this.repo = repo;
-        this.kafkaTemplate = kafkaTemplate;
     }
 
     public ResponseEntity<Inventory> createInventory(InventoryRequest inventoryRequest) {
-        kafkaTemplate.send(topic, inventoryRequest);
         Inventory inventory =  new Inventory(inventoryRequest.id(),inventoryRequest.skuCode());
         this.repo.save(inventory);
         return ResponseEntity.accepted().build();
