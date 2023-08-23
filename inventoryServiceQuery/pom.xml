@@ -15,7 +15,7 @@
 
 	</properties>
 	<groupId>com.inventory</groupId>
-	<artifactId>inventory</artifactId>
+	<artifactId>inventoryQuery</artifactId>
 	<name>inventory</name>
 	<description>Demo project for Spring Boot</description>
 

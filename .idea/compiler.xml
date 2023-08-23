@@ -13,11 +13,14 @@
         <module name="product-service" />
         <module name="registry" />
         <module name="inventory" />
+        <module name="inventoryQuery" />
+        <module name="gateway" />
         <module name="order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-gateway" target="17" />
+      <module name="inventoryCommand" target="17" />
       <module name="order-service" target="17" />
       <module name="product.service" target="17" />
       <module name="product.service.main" target="17" />
@@ -28,7 +31,10 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gateway" options="-parameters" />
       <module name="inventory" options="-parameters" />
+      <module name="inventoryCommand" options="-parameters" />
+      <module name="inventoryQuery" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />

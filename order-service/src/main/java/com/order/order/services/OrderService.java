@@ -8,6 +8,7 @@ import com.order.order.model.OrderLine;
 import com.order.order.repos.OrderRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,11 +22,13 @@ public class OrderService {
     private OrderRepo orderController;
     private WebClient webClient;
     private OrderRepo orderRepository;
+    private final KafkaTemplate<String,String> kafkaTemplate;
 
-    public OrderService(OrderRepo orderController, WebClient webClient, OrderRepo orderRepository) {
+    public OrderService(OrderRepo orderController, WebClient webClient, OrderRepo orderRepository, KafkaTemplate kafkaTemplate) {
         this.orderController = orderController;
         this.webClient = webClient;
         this.orderRepository = orderRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public InventoryResponse[] isSkuAvailable(List<String> skuCodes) {
@@ -50,8 +53,10 @@ public class OrderService {
         var skuCodes = orderLineList.stream().map(OrderLine::getSkuCode).toList();
         //save order if skuAvailable
         InventoryResponse[] skuAvailable = isSkuAvailable(skuCodes);
-        if (skuAvailable.length >0 && Arrays.stream(skuAvailable).allMatch(InventoryResponse::isInStock))
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderRepository.save(order));
+        if (skuAvailable.length >0 && Arrays.stream(skuAvailable).allMatch(InventoryResponse::isInStock)) {
+            kafkaTemplate.send("notificationTopic",order.getOrderNumber());
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderRepository.save(order));
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(order);
     }
 

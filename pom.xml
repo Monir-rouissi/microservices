@@ -5,10 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-    <module>inventoryService</module>
+        <module>inventoryService</module>
+<!--        <module>inventoryServiceQuery</module>-->
         <module>product-service</module>
         <module>order-service</module>
         <module>registry</module>
+        <module>gateway/gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
