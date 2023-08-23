@@ -20,7 +20,7 @@ public class InventoryController {
         this.service = service;
     }
     @PostMapping("add")
-    public ResponseEntity<Inventory> createProduct(@RequestBody InventoryRequest inventoryRequest) {
+    public ResponseEntity<Inventory> createInventory(@RequestBody InventoryRequest inventoryRequest) {
         return service.createInventory(inventoryRequest);
     }
 
