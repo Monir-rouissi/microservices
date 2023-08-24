@@ -2,6 +2,7 @@ package com.order.order.services;
 
 import com.order.order.dto.OrderLineDto;
 import com.order.order.dto.OrderRequest;
+import com.order.order.event.OrderPlaceEvent;
 import com.order.order.model.InventoryResponse;
 import com.order.order.model.Order;
 import com.order.order.model.OrderLine;
@@ -22,7 +23,7 @@ public class OrderService {
     private OrderRepo orderController;
     private WebClient webClient;
     private OrderRepo orderRepository;
-    private final KafkaTemplate<String,String> kafkaTemplate;
+    private final KafkaTemplate<Object, OrderPlaceEvent> kafkaTemplate;
 
     public OrderService(OrderRepo orderController, WebClient webClient, OrderRepo orderRepository, KafkaTemplate kafkaTemplate) {
         this.orderController = orderController;
@@ -54,7 +55,7 @@ public class OrderService {
         //save order if skuAvailable
         InventoryResponse[] skuAvailable = isSkuAvailable(skuCodes);
         if (skuAvailable.length >0 && Arrays.stream(skuAvailable).allMatch(InventoryResponse::isInStock)) {
-            kafkaTemplate.send("notificationTopic",order.getOrderNumber());
+            kafkaTemplate.send("notificationTopic",new OrderPlaceEvent(order.getOrderNumber()));
             return ResponseEntity.status(HttpStatus.CREATED).body(orderRepository.save(order));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(order);

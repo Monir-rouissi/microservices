@@ -4,14 +4,16 @@
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/order-service/src/main/resources/archetype-resources" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/registry/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/notification/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="product-service" />
         <module name="registry" />
+        <module name="notification" />
+        <module name="product-service" />
         <module name="inventory" />
         <module name="inventoryQuery" />
         <module name="gateway" />
@@ -35,6 +37,7 @@
       <module name="inventory" options="-parameters" />
       <module name="inventoryCommand" options="-parameters" />
       <module name="inventoryQuery" options="-parameters" />
+      <module name="notification" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />

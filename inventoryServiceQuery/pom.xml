@@ -47,7 +47,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.guicedee.services</groupId>
+            <artifactId>sl4j</artifactId>
+            <version>1.0.13.5-jre14</version>
+        </dependency>
+    </dependencies>
 
 	<repositories>
 		<repository>
