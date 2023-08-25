@@ -44,18 +44,19 @@ public class OrderService {
     }
 
     public ResponseEntity<Order> placeOrder(OrderRequest orderRequest) {
+
         List<OrderLine> orderLineList =
                 orderRequest.orderLines().stream().map(this::mapToModel).toList();
         //create order
         var order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         order.setOrderLines(orderLineList);
-
+        kafkaTemplate.send("notificationTopic",new OrderPlaceEvent(order.getOrderNumber()));
         var skuCodes = orderLineList.stream().map(OrderLine::getSkuCode).toList();
         //save order if skuAvailable
         InventoryResponse[] skuAvailable = isSkuAvailable(skuCodes);
         if (skuAvailable.length >0 && Arrays.stream(skuAvailable).allMatch(InventoryResponse::isInStock)) {
-            kafkaTemplate.send("notificationTopic",new OrderPlaceEvent(order.getOrderNumber()));
+
             return ResponseEntity.status(HttpStatus.CREATED).body(orderRepository.save(order));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(order);
