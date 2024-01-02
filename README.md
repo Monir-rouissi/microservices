@@ -39,8 +39,8 @@ If you encounter any problems, please open an issue in the issue tracker.
 
 ## Authors
 
-Your Name  
-your.email@example.com
+Mounir Rouissi  
+mounirrouissi2@gmail.com
 
 ## Version History
 
