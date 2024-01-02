@@ -2,23 +2,23 @@
 ```markdown
 # Project Title
 
-Microservice using Spring Boot, Maven, and Java 17
+Microservice using Spring Boot, Maven, and Java 19
 
 ## Description
 
-This project is a simple microservice implemented using Spring Boot, Maven, and Java 17.
+This project is a simple microservice implemented using Spring Boot, Maven, and Java 19.
 
 ## Getting Started
 
 ### Dependencies
 
-* Java 17
+* Java 19
 * Maven
 * Spring Boot
 
 ### Installing
 
-* Install Java 17 from the official Oracle website.
+* Install Java 19 from the official Oracle website.
 * Install Maven from the official Apache Maven website.
 * Spring Boot does not require any installation. It will be downloaded by Maven.
 
@@ -55,5 +55,5 @@ This project is licensed under the MIT  License - see the LICENSE.md file for de
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Maven](https://maven.apache.org/)
-* [Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+* [Java 19](https://www.oracle.com/java/technologies/javase-jdk19-downloads.html)
 ```
