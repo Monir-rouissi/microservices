@@ -1,4 +1,3 @@
-Sure, here's a basic README file for a microservice project using Spring Boot, Maven, and Java 17:
 
 ```markdown
 # Project Title
