@@ -1,14 +1,19 @@
+# Microservice Project using Spring Cloud
 
+This project demonstrates a practical microservices architecture using Spring Cloud. It covers various aspects of a microservice architecture including service discovery, centralized configuration, distributed tracing, circuit breaker patterns, and event-driven architecture.
+
+## Features
+
+- **Service Discovery**: Implemented using Spring Cloud's Eureka Server, allowing microservices to register themselves and discover other services.
+- **Centralized Configuration**: Managed through Spring Cloud Config Server, providing a central place for externalized configuration in a distributed system.
+- **Distributed Tracing**: Integrated with Spring Cloud Sleuth and Zipkin for distributed tracing to help debug and understand the system's behavior.
+- **Circuit Breaker**: Utilizes the Hystrix library to implement the Circuit Breaker pattern, which helps to prevent system failure and ensure continued operation.
+- **Event-Driven Architecture**: Leverages Spring Cloud Stream to create an event-driven architecture.
 ```markdown
 # Project Title
 
 Microservice using Spring Boot, Maven, and Java 19
 
-## Description
-
-This project is a simple microservice implemented using Spring Boot, Maven, and Java 19.
-
-## Getting Started
 
 ### Dependencies
 
