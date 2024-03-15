@@ -5,7 +5,7 @@ This project demonstrates a practical microservices architecture using Spring Cl
 This project consists of three separate microservices: Order Service, Product Service, and Inventory Service. Each service is designed to run independently and communicates with its own database.
 
 
-### Order Service
+### usage example: Order Service
 
 The Order Service uses MySQL as its database.
 
