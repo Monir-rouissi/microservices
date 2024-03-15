@@ -48,10 +48,6 @@ Microservice using Spring Boot, Maven, and Java 19
 ```bash
 mvn clean install
 ```
-* To run the project, use the following command:
-```bash
-mvn spring-boot:run
-```
 
 ## Help
 
