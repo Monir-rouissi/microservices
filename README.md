@@ -1,6 +1,6 @@
 # Microservice Project using Spring Cloud
 ## Description
-This project demonstrates a practical microservices architecture using Spring Cloud. It covers various aspects of a microservice architecture including service discovery, centralized configuration, distributed tracing, circuit breaker patterns, and event-driven architecture.
+This project demonstrates a practical microservices architecture using Spring Cloud. It covers various aspects of a microservice architecture including service discovery, centralized configuration, distributed tracing, circuit breaker patterns, and event-driven architecture and github actions as a CI/CD pipeline.
 
 This project consists of three separate microservices: Order Service, Product Service, and Inventory Service. Each service is designed to run independently and communicates with its own database.
 
