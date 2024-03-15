@@ -1,6 +1,28 @@
 # Microservice Project using Spring Cloud
-
+## Description
 This project demonstrates a practical microservices architecture using Spring Cloud. It covers various aspects of a microservice architecture including service discovery, centralized configuration, distributed tracing, circuit breaker patterns, and event-driven architecture.
+
+This project consists of three separate microservices: Order Service, Product Service, and Inventory Service. Each service is designed to run independently and communicates with its own database.
+
+
+### Order Service
+
+The Order Service uses MySQL as its database.
+
+```bash
+# Navigate to the Order Service directory
+cd order-service
+
+# Run the service using Maven
+mvn spring-boot:run
+
+## Prerequisites
+
+- Java JDK 19 or later
+- Maven 3.2 or later
+- MySQL (for Order Service)
+- PostgreSQL (for Product Service and Inventory Service)
+
 
 ## Features
 
@@ -13,13 +35,6 @@ This project demonstrates a practical microservices architecture using Spring Cl
 # Project Title
 
 Microservice using Spring Boot, Maven, and Java 19
-
-
-### Dependencies
-
-* Java 19
-* Maven
-* Spring Boot
 
 ### Installing
 
@@ -56,7 +71,7 @@ mounirrouissi2@gmail.com
 
 This project is licensed under the MIT  License - see the LICENSE.md file for details
 
-## Acknowledgments
+## Links
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Maven](https://maven.apache.org/)
