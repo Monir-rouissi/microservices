@@ -1,3 +1,4 @@
+/*
 package com.order.order.config;
 
 
@@ -20,3 +21,4 @@ public class CircuitBreakerConfig {
         return CircuitBreaker.of("myCircuitBreaker", config);
     }
 }
+*/

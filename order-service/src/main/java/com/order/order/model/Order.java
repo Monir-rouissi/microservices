@@ -11,7 +11,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String orderNumber;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<OrderLine> orderLines;
 
     public String getOrderNumber() {
@@ -27,6 +28,8 @@ public class Order {
     }
 
     public void setOrderLines(List<OrderLine> orderLines) {
+        orderLines.forEach(orderLine -> orderLine.setOrder(this));
+
         this.orderLines = orderLines;
     }
 }

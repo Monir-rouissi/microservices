@@ -18,14 +18,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+
 public class OrderService {
-    private static final String inventoryUri = "http://localhost:8080/api/inventory";
+    private static final String inventoryUri = "http://inventory-service/api/inventory";
     private OrderRepo orderController;
-    private WebClient webClient;
+    private WebClient.Builder webClient;
     private OrderRepo orderRepository;
     private final KafkaTemplate<Object, OrderPlaceEvent> kafkaTemplate;
 
-    public OrderService(OrderRepo orderController, WebClient webClient, OrderRepo orderRepository, KafkaTemplate kafkaTemplate) {
+    public OrderService(OrderRepo orderController, WebClient.Builder webClient, OrderRepo orderRepository, KafkaTemplate kafkaTemplate) {
         this.orderController = orderController;
         this.webClient = webClient;
         this.orderRepository = orderRepository;
@@ -34,7 +35,7 @@ public class OrderService {
 
     public InventoryResponse[] isSkuAvailable(List<String> skuCodes) {
         //call inventory serivce using webClient
-        return webClient.get()
+        return webClient.build().get()
                 .uri(inventoryUri ,uriBuilder->uriBuilder.queryParam("skuCode",skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
