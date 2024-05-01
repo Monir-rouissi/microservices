@@ -8,8 +8,11 @@
     <file url="file://$PROJECT_DIR$/inventoryServiceQuery/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/inventoryServiceQuery/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/product-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/product-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/registry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

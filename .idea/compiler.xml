@@ -23,11 +23,11 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gateway" options="-parameters" />
-      <module name="inventory" options="-parameters" />
-      <module name="notification" options="-parameters" />
-      <module name="order" options="-parameters" />
-      <module name="product-service" options="-parameters" />
-      <module name="registry" options="-parameters" />
+      <module name="inventory" options="" />
+      <module name="notification" options="" />
+      <module name="order" options="" />
+      <module name="product-service" options="" />
+      <module name="registry" options="" />
     </option>
   </component>
 </project>
