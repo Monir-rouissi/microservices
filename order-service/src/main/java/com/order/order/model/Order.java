@@ -1,5 +1,6 @@
 package com.order.order.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class Order {
     private Long id;
     private String orderNumber;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, orphanRemoval = true)
-
+    @JsonManagedReference
     private List<OrderLine> orderLines;
 
     public String getOrderNumber() {

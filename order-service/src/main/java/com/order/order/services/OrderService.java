@@ -9,6 +9,7 @@ import com.order.order.model.OrderLine;
 import com.order.order.repos.OrderRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -25,12 +26,16 @@ public class OrderService {
     private WebClient.Builder webClient;
     private OrderRepo orderRepository;
     private final KafkaTemplate<Object, OrderPlaceEvent> kafkaTemplate;
+    private final boolean notificationsEnabled;
 
-    public OrderService(OrderRepo orderController, WebClient.Builder webClient, OrderRepo orderRepository, KafkaTemplate kafkaTemplate) {
+    public OrderService(OrderRepo orderController, WebClient.Builder webClient, OrderRepo orderRepository,
+                        KafkaTemplate<Object, OrderPlaceEvent> kafkaTemplate,
+                        @Value("${app.notifications.enabled:false}") boolean notificationsEnabled) {
         this.orderController = orderController;
         this.webClient = webClient;
         this.orderRepository = orderRepository;
         this.kafkaTemplate = kafkaTemplate;
+        this.notificationsEnabled = notificationsEnabled;
     }
 
     public InventoryResponse[] isSkuAvailable(List<String> skuCodes) {
@@ -52,13 +57,16 @@ public class OrderService {
         var order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         order.setOrderLines(orderLineList);
-        kafkaTemplate.send("notificationTopic",new OrderPlaceEvent(order.getOrderNumber()));
         var skuCodes = orderLineList.stream().map(OrderLine::getSkuCode).toList();
         //save order if skuAvailable
         InventoryResponse[] skuAvailable = isSkuAvailable(skuCodes);
         if (skuAvailable.length >0 && Arrays.stream(skuAvailable).allMatch(InventoryResponse::isInStock)) {
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(orderRepository.save(order));
+            Order savedOrder = orderRepository.save(order);
+            if (notificationsEnabled) {
+                kafkaTemplate.send("notificationTopic", new OrderPlaceEvent(order.getOrderNumber()));
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(order);
     }

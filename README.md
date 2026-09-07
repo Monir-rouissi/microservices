@@ -1,75 +1,110 @@
-# Microservice Project using Spring Cloud
-## Description
-This project demonstrates a practical microservices architecture using Spring Cloud. It covers various aspects of a microservice architecture including service discovery, centralized configuration, distributed tracing, circuit breaker patterns, and event-driven architecture and github actions as a CI/CD pipeline.
+# Spring Cloud Microservices
 
-This project consists of three separate microservices: Order Service, Product Service, and Inventory Service. Each service is designed to run independently and communicates with its own database.
+A small Spring Boot and Spring Cloud microservices project with an Order, Product, and Inventory service. Services register with Eureka and are exposed through Spring Cloud Gateway.
 
+## Services
 
-### usage example: Order Service
+| Service | Port | Purpose |
+| --- | ---: | --- |
+| Registry | 8761 | Eureka service discovery |
+| Config server | 8181 | Optional centralized configuration |
+| Gateway | 8080 | API entry point |
+| Product service | 8082 | Product catalog |
+| Inventory service | 8084 | Inventory availability |
+| Order service | 8087 | Order creation |
+| Notification service | dynamic | Optional Kafka notification consumer |
 
-The Order Service uses MySQL as its database.
+## Requirements
 
-```bash
-# Navigate to the Order Service directory
-cd order-service
+- Java 25
+- Maven 3.9+
+- MySQL running on `localhost:3306` with a database named `order`
+- PostgreSQL running on `localhost:5432` with a database named `micro`
 
-# Run the service using Maven
+The default local credentials are defined in each service's `application.properties`. Update them if your database uses different credentials.
+
+Docker Compose currently starts Kafka and ZooKeeper only. For local development, use the PowerShell commands below to start the Java services and databases individually.
+
+## Build
+
+Open PowerShell in the repository root. On Windows with Java 25, clear `TEMP` and `TMP` for the Maven process to avoid the JDK temporary-directory networking issue:
+
+```powershell
+Remove-Item Env:TEMP -ErrorAction SilentlyContinue
+Remove-Item Env:TMP -ErrorAction SilentlyContinue
+mvn -B -DskipTests package
+```
+
+## Run locally
+
+Start the services in this order, each in a separate PowerShell window:
+
+```powershell
+Remove-Item Env:TEMP -ErrorAction SilentlyContinue
+Remove-Item Env:TMP -ErrorAction SilentlyContinue
+
+cd registry
 mvn spring-boot:run
-
-## Prerequisites
-
-- Java JDK 19 or later
-- Maven 3.2 or later
-- MySQL (for Order Service)
-- PostgreSQL (for Product Service and Inventory Service)
-
-
-## Features
-
-- **Service Discovery**: Implemented using Spring Cloud's Eureka Server, allowing microservices to register themselves and discover other services.
-- **Centralized Configuration**: Managed through Spring Cloud Config Server, providing a central place for externalized configuration in a distributed system.
-- **Distributed Tracing**: Integrated with Spring Cloud Sleuth and Zipkin for distributed tracing to help debug and understand the system's behavior.
-- **Circuit Breaker**: Utilizes the Hystrix library to implement the Circuit Breaker pattern, which helps to prevent system failure and ensure continued operation.
-- **Event-Driven Architecture**: Leverages Spring Cloud Stream to create an event-driven architecture.
-```markdown
-# Project Title
-
-Microservice using Spring Boot, Maven, and Java 19
-
-### Installing
-
-* Install Java 19 from the official Oracle website.
-* Install Maven from the official Apache Maven website.
-* Spring Boot does not require any installation. It will be downloaded by Maven.
-
-### Executing program
-
-* To compile the project, navigate to the project directory and run the following command:
-```bash
-mvn clean install
 ```
 
-## Help
-
-If you encounter any problems, please open an issue in the issue tracker.
-
-## Authors
-
-Mounir Rouissi  
-mounirrouissi2@gmail.com
-
-## Version History
-
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the MIT  License - see the LICENSE.md file for details
-
-## Links
-
-* [Spring Boot](https://spring.io/projects/spring-boot)
-* [Maven](https://maven.apache.org/)
-* [Java 19](https://www.oracle.com/java/technologies/javase-jdk19-downloads.html)
+```powershell
+cd config-server
+mvn spring-boot:run
 ```
+
+```powershell
+cd inventoryService
+mvn spring-boot:run
+```
+
+```powershell
+cd product-service
+mvn spring-boot:run
+```
+
+```powershell
+cd order-service
+mvn spring-boot:run
+```
+
+```powershell
+cd gateway/gateway
+mvn spring-boot:run
+```
+
+Open the Eureka dashboard at [http://localhost:8761](http://localhost:8761). Once the services appear there, use the gateway at `http://localhost:8080`.
+
+## Example requests
+
+Check inventory through the gateway:
+
+```powershell
+Invoke-RestMethod 'http://localhost:8080/api/inventory?skuCode=Iphon1'
+```
+
+Create an order through the gateway:
+
+```powershell
+$body = @{
+  orderLines = @(
+    @{ skuCode = 'Iphon1'; price = 999.99; quantity = 1 }
+  )
+} | ConvertTo-Json -Depth 4
+
+Invoke-RestMethod 'http://localhost:8080/api/order' -Method Post -ContentType 'application/json' -Body $body
+```
+
+## Kafka notifications
+
+Kafka is optional for normal local development. Notifications are disabled by default so the Order service can run without Kafka. To enable them, start Kafka and set this environment variable before launching Order and Notification services:
+
+```powershell
+$env:APP_NOTIFICATIONS_ENABLED = 'true'
+```
+
+Run `docker compose up -d` only when you want the optional Kafka notification flow. It does not start the Java services or the databases.
+
+## Notes
+
+- Maven output is ignored through `.gitignore`; do not commit any `target/` directories or JAR files.
+- The Config server uses environment-backed Git settings. Set `GIT_URI`, `GIT_USERNAME`, and `GIT_TOKEN` only when you need its external configuration repository.
